@@ -1,0 +1,139 @@
+* {
+    box-sizing: border-box;
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin: 20px 0;
+    font-family: apple-system, 'Segoe UI', Arial;
+    color: #2E3333;
+}
+
+h2 {
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 26px;
+    font-family: apple-system, 'Segoe UI', Arial;
+    color: #2E3333;
+}
+
+h3 {
+
+    color: #2E3333;
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-family: apple-system, 'Segoe UI', Arial;
+}
+
+header {
+    border-bottom: solid #F4F5F5 1px;
+}
+
+header img {
+    height: 197px;
+    width: 350px;
+}
+
+.container {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    width: 160px;
+    height: 55px;
+}
+
+.hero-container {
+    display: flex;
+    padding: 20px 0;
+}
+
+.hero-container img {
+    width: 350px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.hero-container p {
+    font-size: 19px;
+    line-height: 30px;
+    font-family: apple-system, 'Segoe UI', Arial;
+    color: #868A8A;
+    margin-right: 60px;
+}
+
+main {
+    background-color: #f3f5f5;
+    padding-top: 20px;
+}
+
+.main-container {
+    display: flex;
+}
+
+.col-left {
+    width: 68%;
+}
+
+.col-right {
+    height: 200px;
+    width: 32%;
+}
+
+article {
+    background-color: white;
+    width: 48%;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    padding: 20px;
+    display: flex;
+    height: 170px;
+}
+
+.articles-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+}
+
+article img {
+    height: 130px;
+    width: 130px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+article .description {
+    height: 34px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    color: #808484;
+    font-family: apple-system, 'Segoe UI', 'Regular';
+}
+
+.price {
+    color: #808484;
+    margin-top: 25px;
+}
+
+.populaire {
+    color: #FF8000;
+    font-weight: 800;
+    /* Utilisation de la valeur numérique pour "Extra-bold" */
+    font-family: 'apple-system', sans-serif;
+    /* Correction de la syntaxe pour "apple-system" et "Regular" */
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+.star {
+    color: #FF8000;
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 20px;
+}
