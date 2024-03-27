@@ -2,19 +2,26 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-// Img
 import logo from "./assets/img/deliveroo-logo.svg";
 
 function App() {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
+  const [cart, setCart] = useState([]);
+
+  let total = 0;
+
+  for (let i = 0; i < cart.length; i++) {
+    const meal = cart[i];
+    total = total + meal.price * meal.quantity;
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(
         "https://site--deliveroo-backend-andromeda-24--5ytnmfswy69s.code.run/"
       );
-      console.log(response.data);
       setData(response.data);
       setIsLoading(false);
     };
@@ -22,13 +29,41 @@ function App() {
     fetchData();
   }, []);
 
+  const handleAddToCart = (meal) => {
+    const newCart = [...cart];
+    const found = newCart.find((elem) => elem.id === meal.id);
+
+    if (found) {
+      found.quantity++;
+    } else {
+      newCart.push({ ...meal, quantity: 1 });
+    }
+
+    setCart(newCart);
+  };
+
+  const handleRemoveFromCart = (meal) => {
+    const newCart = [...cart];
+
+    const found = newCart.find((elem) => elem.id === meal.id);
+
+    if (found.quantity === 1) {
+      const index = newCart.indexOf(found);
+      newCart.splice(index, 1);
+    } else {
+      found.quantity--;
+    }
+
+    setCart(newCart);
+  };
+
   return isLoading ? (
     <p>Loading ...</p>
   ) : (
     <>
       <header>
         <div className="container">
-          <img className="logo" src={logo} alt="deliveroo logo" />
+          <img src={logo} alt="deliveroo logo" />
         </div>
       </header>
       <section>
@@ -51,21 +86,18 @@ function App() {
                     <div className="articles-container">
                       {category.meals.map((meal) => {
                         return (
-                          <article key={meal.id}>
+                          <article
+                            key={meal.id}
+                            onClick={() => {
+                              handleAddToCart(meal);
+                            }}
+                          >
                             <div>
                               <h3>{meal.title}</h3>
                               <p className="description">{meal.description}</p>
-                              <p>
-                                <span className="price">{meal.price} €</span>
-                                {meal.popular && (
-                                  <>
-                                    <span className="star">&#9733;</span>
-                                    <span className="populaire">Populaire</span>
-                                  </>
-                                )}
-                              </p>
+                              <span>{meal.price} €</span>
+                              {meal.popular && <span>Populaire</span>}
                             </div>
-
                             {meal.picture && (
                               <img src={meal.picture} alt={meal.title} />
                             )}
@@ -80,7 +112,55 @@ function App() {
               }
             })}
           </section>
-          <section className="col-right"></section>
+          <section className="col-right">
+            <aside className="container-panier">
+              <button className="valider-mon-panier">Valider mon panier</button>
+              {cart.length === 0 ? (
+                <p>Panier vide</p>
+              ) : (
+                <div className="food-selected">
+                  {cart.map((meal) => {
+                    return (
+                      <div key={meal.id}>
+                        <button
+                          onClick={() => {
+                            handleRemoveFromCart(meal);
+                          }}
+                        >
+                          -
+                        </button>
+                        <span>{meal.quantity}</span>
+                        <button
+                          onClick={() => {
+                            handleAddToCart(meal);
+                          }}
+                        >
+                          +
+                        </button>
+                        <span>{meal.title}</span>
+                        <span className="price">
+                          {(meal.price * meal.quantity).toFixed(2)} €
+                        </span>
+                      </div>
+                    );
+                  })}
+
+                  <p className="total">
+                    Total :<span className="price">{total.toFixed(2)} €</span>
+                  </p>
+
+                  <button
+                    className="remove-cart"
+                    onClick={() => {
+                      setCart([]);
+                    }}
+                  >
+                    Remove cart
+                  </button>
+                </div>
+              )}
+            </aside>
+          </section>
         </div>
       </main>
     </>
